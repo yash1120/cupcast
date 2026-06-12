@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CupCast — World Cup 2026 ML Predictor</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0a0e1a; --card: #121829; --card2: #0e1422; --line: #1f2940;
+    --text: #e7ecf5; --muted: #8a94ab; --accent: #22d37f; --accent2: #f5c542;
+    --home: #22d37f; --draw: #3c465e; --away: #e05c6e;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--bg); color: var(--text);
+         font-family: Inter, "Segoe UI", system-ui, sans-serif; padding-bottom: 60px; }
+  header { padding: 38px 24px 22px; text-align: center;
+           background: radial-gradient(ellipse at top, #14203a 0%, var(--bg) 70%); }
+  h1 { font-size: 2.1rem; letter-spacing: -0.5px; }
+  h1 .ball { filter: drop-shadow(0 0 12px rgba(34,211,127,.5)); }
+  h1 span.grad { background: linear-gradient(90deg, var(--accent), var(--accent2));
+                 -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: var(--muted); margin-top: 8px; font-size: .95rem; }
+  .meta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+  .chip { background: var(--card); border: 1px solid var(--line); border-radius: 999px;
+          padding: 6px 14px; font-size: .8rem; color: var(--muted); }
+  .chip b { color: var(--text); font-weight: 600; }
+  main { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+  section { margin-top: 42px; }
+  h2 { font-size: 1.25rem; margin-bottom: 4px; }
+  .hint { color: var(--muted); font-size: .85rem; margin-bottom: 16px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+  /* groups grid */
+  .groups { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 14px; }
+  .group h3 { font-size: .8rem; color: var(--accent2); letter-spacing: 1.5px;
+              text-transform: uppercase; margin-bottom: 10px; }
+  .trow { display: grid; grid-template-columns: 26px 1fr 44px 52px; align-items: center;
+          gap: 6px; padding: 5px 0; font-size: .88rem; border-top: 1px solid var(--card2); }
+  .trow .pct { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
+  .advbar { grid-column: 1 / -1; height: 4px; border-radius: 2px; background: var(--card2);
+            overflow: hidden; margin-bottom: 2px; }
+  .advbar i { display: block; height: 100%; border-radius: 2px;
+              background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+  /* fixtures */
+  .fixlist { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; }
+  .fix { padding: 14px 16px; }
+  .fix .teams { display: flex; justify-content: space-between; font-weight: 600; font-size: .95rem; }
+  .fix .date { color: var(--muted); font-size: .75rem; margin-bottom: 8px; }
+  .probbar { display: flex; height: 9px; border-radius: 5px; overflow: hidden; margin-top: 10px; }
+  .probbar i { height: 100%; }
+  .p-h { background: var(--home); } .p-d { background: #3c465e; } .p-a { background: var(--away); }
+  .problabels { display: flex; justify-content: space-between; font-size: .73rem;
+                color: var(--muted); margin-top: 5px; font-variant-numeric: tabular-nums; }
+  .score { color: var(--accent2); font-weight: 700; }
+  /* h2h */
+  .h2h-controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  select { background: var(--card2); color: var(--text); border: 1px solid var(--line);
+           border-radius: 8px; padding: 10px 12px; font-size: .9rem; min-width: 210px; }
+  button { background: linear-gradient(90deg, var(--accent), #1aa866); color: #04140c;
+           font-weight: 700; border: 0; border-radius: 8px; padding: 10px 22px;
+           font-size: .9rem; cursor: pointer; }
+  button:hover { filter: brightness(1.1); }
+  #h2h-result { margin-top: 18px; display: none; }
+  .vs-line { display: flex; justify-content: space-between; font-size: 1.05rem;
+             font-weight: 700; margin-bottom: 4px; }
+  .xg { color: var(--muted); font-size: .85rem; margin-top: 8px; }
+  footer { text-align: center; color: var(--muted); font-size: .8rem; margin-top: 56px; }
+  footer a { color: var(--accent); text-decoration: none; }
+  canvas { max-height: 480px; }
+  .flag { width: 22px; height: 16px; border-radius: 2px; vertical-align: -2px;
+          box-shadow: 0 0 0 1px rgba(255,255,255,.08); }
+  .wx { display: flex; gap: 10px; flex-wrap: wrap; color: var(--muted);
+        font-size: .73rem; margin-top: 8px; }
+  .wx span { background: var(--card2); border-radius: 6px; padding: 2px 8px; }
+  .detail-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 18px; }
+  .detail-cols h4 { font-size: .8rem; color: var(--accent2); text-transform: uppercase;
+                    letter-spacing: 1px; margin-bottom: 8px; }
+  .srow { display: flex; justify-content: space-between; font-size: .87rem;
+          padding: 4px 0; border-top: 1px solid var(--card2);
+          font-variant-numeric: tabular-nums; }
+  .srow .bar { flex: 1; margin: 5px 12px; height: 7px; border-radius: 4px;
+               background: var(--card2); overflow: hidden; }
+  .srow .bar i { display: block; height: 100%; background: var(--accent); }
+  .disclaimer { margin-top: 18px; font-size: .73rem; color: #b08a3e;
+                border-top: 1px solid var(--line); padding-top: 10px; }
+  @media (max-width: 640px) { .detail-cols { grid-template-columns: 1fr; } }
+  /* match modal */
+  .fix.clickable { cursor: pointer; transition: border-color .15s; }
+  .fix.clickable:hover { border-color: var(--accent); }
+  #modal-backdrop { position: fixed; inset: 0; background: rgba(4,7,14,.78);
+                    backdrop-filter: blur(4px); z-index: 50; display: none;
+                    overflow-y: auto; padding: 4vh 16px; }
+  #modal { max-width: 880px; margin: 0 auto; background: var(--card);
+           border: 1px solid var(--line); border-radius: 16px; padding: 26px; }
+  #modal .close { float: right; background: var(--card2); color: var(--muted);
+                  border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; }
+  .modal-title { display: flex; justify-content: space-between; align-items: center;
+                 font-size: 1.25rem; font-weight: 700; margin: 6px 0 2px; gap: 12px; }
+  .modal-sub { color: var(--muted); font-size: .82rem; margin-bottom: 14px; }
+  .h2h-record { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+  .h2h-record span { background: var(--card2); border-radius: 8px; padding: 6px 12px;
+                     font-size: .82rem; color: var(--muted); }
+  .h2h-record b { color: var(--text); }
+  .meeting { display: flex; justify-content: space-between; gap: 10px; font-size: .82rem;
+             padding: 5px 0; border-top: 1px solid var(--card2); color: var(--muted); }
+  .meeting b { color: var(--text); }
+  .squads { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 10px; }
+  .squad { max-height: 380px; overflow-y: auto; border: 1px solid var(--card2);
+           border-radius: 10px; padding: 10px 14px; }
+  .squad h5 { font-size: .85rem; margin-bottom: 6px; position: sticky; top: -10px;
+              background: var(--card); padding: 8px 0 6px; }
+  .prow { display: grid; grid-template-columns: 24px 1fr 56px 40px; gap: 6px;
+          font-size: .78rem; padding: 3px 0; border-top: 1px solid var(--card2);
+          font-variant-numeric: tabular-nums; }
+  .prow .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .prow .nm small { color: var(--muted); }
+  .prow .st { text-align: right; color: var(--muted); }
+  .prow.star .nm { color: var(--accent2); }
+  .pos-h { color: var(--accent); font-size: .72rem; text-transform: uppercase;
+           letter-spacing: 1px; padding: 7px 0 2px; }
+  section.modal-sec { margin-top: 22px; }
+  section.modal-sec h4 { font-size: .8rem; color: var(--accent2); text-transform: uppercase;
+                         letter-spacing: 1px; margin-bottom: 8px; }
+  @media (max-width: 640px) { .squads { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="ball">⚽</span> Cup<span class="grad">Cast</span></h1>
+  <div class="sub">Machine-learning forecasts for the FIFA World Cup 2026 · trained on 49,000+ internationals since 1872</div>
+  <div class="meta" id="meta"></div>
+</header>
+
+<main>
+  <section>
+    <h2>🏆 Title odds</h2>
+    <div class="hint" id="sim-hint"></div>
+    <div class="card"><canvas id="oddsChart"></canvas></div>
+  </section>
+
+  <section>
+    <h2>📋 Groups — chance to reach the round of 32</h2>
+    <div class="hint">Top two advance plus the eight best third-placed teams. Played results are locked in.</div>
+    <div class="groups" id="groups"></div>
+  </section>
+
+  <section>
+    <h2>📅 Upcoming fixtures</h2>
+    <div class="hint">Win / draw / win probabilities for the next scheduled group matches.</div>
+    <div class="fixlist" id="fixtures"></div>
+  </section>
+
+  <section>
+    <h2>⚔️ Head-to-head predictor</h2>
+    <div class="hint">Pick any two of the 48 finalists. Hosts get home advantage automatically unless you force a neutral venue.</div>
+    <div class="card">
+      <div class="h2h-controls">
+        <select id="homeSel"></select>
+        <span style="color:var(--muted)">vs</span>
+        <select id="awaySel"></select>
+        <label style="color:var(--muted);font-size:.85rem">
+          <input type="checkbox" id="neutralChk" checked> neutral venue</label>
+        <button onclick="runH2H()">Predict</button>
+      </div>
+      <div id="h2h-result">
+        <div class="vs-line"><span id="h2h-home"></span><span id="h2h-away"></span></div>
+        <div class="probbar" id="h2h-bar"></div>
+        <div class="problabels" id="h2h-labels"></div>
+        <div class="xg" id="h2h-xg"></div>
+        <div class="detail-cols">
+          <div>
+            <h4>Most likely scorelines</h4>
+            <div id="h2h-scores"></div>
+          </div>
+          <div>
+            <h4>Markets</h4>
+            <div id="h2h-markets"></div>
+          </div>
+        </div>
+        <div class="disclaimer">Probabilities are model estimates for entertainment —
+          not betting advice. The model matches market accuracy at best; bookmaker
+          margins mean betting on it loses money in expectation.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="foot"></footer>
+</main>
+
+<div id="modal-backdrop" onclick="if (event.target === this) closeModal()">
+  <div id="modal"></div>
+</div>
+
+<script>
+const ISO = {"Mexico":"MX","South Africa":"ZA","South Korea":"KR","Czech Republic":"CZ",
+"Canada":"CA","Bosnia and Herzegovina":"BA","Qatar":"QA","Switzerland":"CH","Brazil":"BR",
+"Morocco":"MA","Haiti":"HT","United States":"US","Paraguay":"PY","Australia":"AU",
+"Turkey":"TR","Germany":"DE","Curaçao":"CW","Ivory Coast":"CI","Ecuador":"EC",
+"Netherlands":"NL","Japan":"JP","Sweden":"SE","Tunisia":"TN","Belgium":"BE","Egypt":"EG",
+"Iran":"IR","New Zealand":"NZ","Spain":"ES","Cape Verde":"CV","Saudi Arabia":"SA",
+"Uruguay":"UY","France":"FR","Senegal":"SN","Iraq":"IQ","Norway":"NO","Argentina":"AR",
+"Algeria":"DZ","Austria":"AT","Jordan":"JO","Portugal":"PT","DR Congo":"CD",
+"Uzbekistan":"UZ","Colombia":"CO","Croatia":"HR","Ghana":"GH","Panama":"PA"};
+const SPECIAL_CODES = {"England":"gb-eng","Scotland":"gb-sct"};
+const DISPLAY = {"Czech Republic":"Czechia","Turkey":"Türkiye","Cape Verde":"Cabo Verde"};
+const flag = t => {
+  const code = SPECIAL_CODES[t] || (ISO[t] && ISO[t].toLowerCase());
+  return code ? `<img class="flag" src="https://flagcdn.com/24x18/${code}.png" alt="" loading="lazy">` : "";
+};
+const disp = t => DISPLAY[t] || t;
+const pct = x => (x * 100).toFixed(x >= 0.095 ? 0 : 1) + "%";
+
+let WEATHER = {};
+let UPCOMING = [];
+
+async function init() {
+  const [odds, metrics, teams, weather] = await Promise.all([
+    fetch("/api/odds").then(r => r.json()),
+    fetch("/api/metrics").then(r => r.json()),
+    fetch("/api/teams").then(r => r.json()),
+    fetch("/api/weather").then(r => r.ok ? r.json() : { forecasts: {} }).catch(() => ({ forecasts: {} })),
+  ]);
+  WEATHER = weather.forecasts || {};
+  renderMeta(odds, metrics);
+  renderOdds(odds);
+  renderGroups(odds);
+  renderFixtures(odds);
+  renderH2H(teams);
+  document.getElementById("foot").innerHTML =
+    `Model: calibrated gradient boosting + Elo features · test accuracy ${(metrics.model.accuracy*100).toFixed(1)}% ` +
+    `· log-loss ${metrics.model.log_loss.toFixed(3)} (Elo baseline ${metrics.elo_baseline.log_loss.toFixed(3)}) · ` +
+    `data: <a href="https://github.com/martj42/international_results">martj42/international_results</a> · built with scikit-learn + FastAPI`;
+}
+
+function renderMeta(odds, metrics) {
+  document.getElementById("meta").innerHTML = [
+    `<span class="chip">🎲 <b>${odds.n_sims.toLocaleString()}</b> tournament simulations</span>`,
+    `<span class="chip">📊 results through <b>${odds.results_through}</b></span>`,
+    `<span class="chip">🎯 held-out accuracy <b>${(metrics.model.accuracy*100).toFixed(1)}%</b></span>`,
+    `<span class="chip">🧠 ${metrics.training_samples.toLocaleString()} training matches</span>`,
+  ].join("");
+  document.getElementById("sim-hint").textContent =
+    `Probability of lifting the trophy, from ${odds.n_sims.toLocaleString()} Monte Carlo runs of the full tournament (official bracket, best-thirds rule).`;
+}
+
+function renderOdds(odds) {
+  const rows = Object.entries(odds.teams)
+    .map(([t, s]) => ({ t, champ: s.champion, final: s.final }))
+    .sort((a, b) => b.champ - a.champ).slice(0, 15);
+  new Chart(document.getElementById("oddsChart"), {
+    type: "bar",
+    data: {
+      labels: rows.map(r => disp(r.t)),
+      datasets: [
+        { label: "Champion", data: rows.map(r => +(r.champ * 100).toFixed(2)),
+          backgroundColor: "#22d37f", borderRadius: 4 },
+        { label: "Reach final", data: rows.map(r => +(r.final * 100).toFixed(2)),
+          backgroundColor: "#f5c54255", borderRadius: 4 },
+      ],
+    },
+    options: {
+      indexAxis: "y", responsive: true,
+      scales: {
+        x: { ticks: { color: "#8a94ab", callback: v => v + "%" }, grid: { color: "#1f2940" } },
+        y: { ticks: { color: "#e7ecf5", font: { size: 13 } }, grid: { display: false } },
+      },
+      plugins: {
+        legend: { labels: { color: "#8a94ab" } },
+        tooltip: { callbacks: { label: c => ` ${c.dataset.label}: ${c.parsed.x}%` } },
+      },
+    },
+  });
+}
+
+function renderGroups(odds) {
+  const byGroup = {};
+  for (const [t, s] of Object.entries(odds.teams))
+    (byGroup[s.group] = byGroup[s.group] || []).push({ t, ...s });
+  const el = document.getElementById("groups");
+  el.innerHTML = Object.keys(byGroup).sort().map(g => {
+    const teams = byGroup[g].sort((a, b) => b.advance - a.advance);
+    return `<div class="card group"><h3>Group ${g}</h3>` + teams.map(s => `
+      <div class="trow">
+        <span>${flag(s.t)}</span><span>${disp(s.t)}</span>
+        <span class="pct" title="expected points">${s.exp_points.toFixed(1)}p</span>
+        <span class="pct" title="chance to advance">${pct(s.advance)}</span>
+        <div class="advbar"><i style="width:${s.advance * 100}%"></i></div>
+      </div>`).join("") + "</div>";
+  }).join("");
+}
+
+function renderFixtures(odds) {
+  const el = document.getElementById("fixtures");
+  const played = odds.fixtures.filter(f => f.played).slice(-4);
+  const coming = odds.fixtures.filter(f => !f.played).slice(0, 12);
+  UPCOMING = coming;
+  el.innerHTML = played.map(f => `
+    <div class="card fix">
+      <div class="date">${f.date} · Group ${f.group} · full-time</div>
+      <div class="teams"><span>${flag(f.home)} ${disp(f.home)}</span>
+        <span class="score">${f.home_score} – ${f.away_score}</span>
+        <span>${disp(f.away)} ${flag(f.away)}</span></div>
+    </div>`).join("") + coming.map((f, idx) => {
+    const wx = WEATHER[`${f.date}|${f.city}`];
+    const wxHtml = wx ? `<div class="wx" title="${wx.stadium}">
+        <span>📍 ${wx.stadium}</span>
+        <span>🌡️ ${Math.round(wx.tmin_c)}–${Math.round(wx.tmax_c)}°C</span>
+        <span>☔ ${wx.precip_prob}%</span>
+        <span>💨 ${Math.round(wx.wind_kmh)} km/h</span>
+        ${wx.elevation_m > 1000 ? `<span>⛰️ ${wx.elevation_m} m altitude</span>` : ""}
+      </div>` : "";
+    return `
+    <div class="card fix clickable" onclick="openMatch(${idx})" title="Click for full match detail">
+      <div class="date">${f.date} · Group ${f.group}${f.neutral ? "" : " · 🏟️ home advantage"} · 🔍</div>
+      <div class="teams"><span>${flag(f.home)} ${disp(f.home)}</span>
+        <span style="color:var(--muted)">vs</span>
+        <span>${disp(f.away)} ${flag(f.away)}</span></div>
+      <div class="probbar">
+        <i class="p-h" style="width:${f.p_home * 100}%"></i>
+        <i class="p-d" style="width:${f.p_draw * 100}%"></i>
+        <i class="p-a" style="width:${f.p_away * 100}%"></i></div>
+      <div class="problabels"><span>${pct(f.p_home)}</span><span>draw ${pct(f.p_draw)}</span><span>${pct(f.p_away)}</span></div>
+      ${wxHtml}
+    </div>`;}).join("");
+}
+
+function renderH2H(teams) {
+  const opts = teams.teams.map(t =>
+    `<option value="${t.name}">${disp(t.name)} — Elo ${t.elo}${t.host ? " · host" : ""}</option>`).join("");
+  document.getElementById("homeSel").innerHTML = opts;
+  document.getElementById("awaySel").innerHTML = opts;
+  document.getElementById("homeSel").value = "Australia";
+  document.getElementById("awaySel").value = "United States";
+}
+
+async function runH2H() {
+  const home = document.getElementById("homeSel").value;
+  const away = document.getElementById("awaySel").value;
+  const neutral = document.getElementById("neutralChk").checked;
+  if (home === away) return alert("Pick two different teams");
+  const r = await fetch(`/api/detail?home=${encodeURIComponent(home)}&away=${encodeURIComponent(away)}&neutral=${neutral}`)
+    .then(r => r.json());
+  const el = document.getElementById("h2h-result");
+  el.style.display = "block";
+  document.getElementById("h2h-home").innerHTML = `${flag(home)} ${disp(home)} (Elo ${r.elo_home})`;
+  document.getElementById("h2h-away").innerHTML = `(Elo ${r.elo_away}) ${disp(away)} ${flag(away)}`;
+  document.getElementById("h2h-bar").innerHTML =
+    `<i class="p-h" style="width:${r.p_home * 100}%"></i>` +
+    `<i class="p-d" style="width:${r.p_draw * 100}%"></i>` +
+    `<i class="p-a" style="width:${r.p_away * 100}%"></i>`;
+  document.getElementById("h2h-labels").innerHTML =
+    `<span>win ${pct(r.p_home)}</span><span>draw ${pct(r.p_draw)}</span><span>win ${pct(r.p_away)}</span>`;
+  document.getElementById("h2h-xg").textContent =
+    `Expected goals: ${r.exp_goals_home.toFixed(2)} – ${r.exp_goals_away.toFixed(2)}` +
+    (neutral ? " (neutral venue)" : " (home advantage applied)");
+  document.getElementById("h2h-scores").innerHTML = scoreRowsHtml(r.top_scorelines);
+  document.getElementById("h2h-markets").innerHTML = marketRowsHtml(r.markets, home, away);
+}
+
+function scoreRowsHtml(scorelines) {
+  const maxP = scorelines[0].p;
+  return scorelines.map(s => `
+    <div class="srow"><span>${s.score}</span>
+      <span class="bar"><i style="width:${s.p / maxP * 100}%"></i></span>
+      <span>${pct(s.p)}</span></div>`).join("");
+}
+
+function marketRowsHtml(m, home, away) {
+  return [
+    ["Over 1.5 goals", m.over_1_5], ["Over 2.5 goals", m.over_2_5],
+    ["Over 3.5 goals", m.over_3_5], ["Both teams score", m.btts],
+    [`${disp(home)} clean sheet`, m.clean_sheet_home],
+    [`${disp(away)} clean sheet`, m.clean_sheet_away],
+    [`${disp(home)} wins to nil`, m.win_to_nil_home],
+    [`${disp(away)} wins to nil`, m.win_to_nil_away],
+  ].map(([label, p]) => `
+    <div class="srow"><span>${label}</span><span>${pct(p)}</span></div>`).join("");
+}
+
+const POS_ORDER = ["Goalkeeper", "Defender", "Midfielder", "Forward"];
+
+function squadHtml(team, squad) {
+  const topGoals = [...squad.players].sort((a, b) => b.goals - a.goals)
+    .slice(0, 3).filter(p => p.goals > 0).map(p => p.name);
+  const byPos = {};
+  for (const p of squad.players) (byPos[p.pos] = byPos[p.pos] || []).push(p);
+  let html = `<div class="squad"><h5>${flag(team)} ${disp(team)} — 26-man squad</h5>`;
+  for (const pos of POS_ORDER) {
+    if (!byPos[pos]) continue;
+    html += `<div class="pos-h">${pos}s</div>`;
+    for (const p of byPos[pos].sort((a, b) => b.caps - a.caps)) {
+      html += `<div class="prow${topGoals.includes(p.name) ? " star" : ""}">
+        <span class="st">${p.no ?? ""}</span>
+        <span class="nm">${p.name} <small>· ${p.club}${p.age ? " · " + p.age : ""}</small></span>
+        <span class="st">${p.caps} caps</span><span class="st">${p.goals}g</span></div>`;
+    }
+  }
+  return html + "</div>";
+}
+
+async function openMatch(idx) {
+  const f = UPCOMING[idx];
+  const backdrop = document.getElementById("modal-backdrop");
+  const modal = document.getElementById("modal");
+  modal.innerHTML = `<div class="modal-sub">Loading match detail…</div>`;
+  backdrop.style.display = "block";
+  document.body.style.overflow = "hidden";
+  try {
+    const q = encodeURIComponent;
+    const [detail, h2h, sqHome, sqAway] = await Promise.all([
+      fetch(`/api/detail?home=${q(f.home)}&away=${q(f.away)}&neutral=${f.neutral}`).then(r => r.json()),
+      fetch(`/api/h2h?a=${q(f.home)}&b=${q(f.away)}`).then(r => r.json()),
+      fetch(`/api/squads?team=${q(f.home)}`).then(r => r.ok ? r.json() : null),
+      fetch(`/api/squads?team=${q(f.away)}`).then(r => r.ok ? r.json() : null),
+    ]);
+    const wx = WEATHER[`${f.date}|${f.city}`];
+    const meetings = h2h.matches === 0
+      ? `<div class="modal-sub">These two teams have never met in a recognised international.</div>`
+      : `<div class="h2h-record">
+           <span><b>${h2h.matches}</b> meetings</span>
+           <span>${disp(f.home)} <b>${h2h.a_wins}</b> wins</span>
+           <span>draws <b>${h2h.draws}</b></span>
+           <span>${disp(f.away)} <b>${h2h.b_wins}</b> wins</span>
+           <span>goals <b>${h2h.a_goals}–${h2h.b_goals}</b></span>
+         </div>` + h2h.recent.map(m => `
+         <div class="meeting"><span>${m.date}</span>
+           <span><b>${disp(m.home)} ${m.score} ${disp(m.away)}</b></span>
+           <span>${m.tournament}</span></div>`).join("");
+    modal.innerHTML = `
+      <button class="close" onclick="closeModal()">✕ close</button>
+      <div class="modal-title"><span>${flag(f.home)} ${disp(f.home)}</span>
+        <span style="color:var(--muted);font-size:.9rem">vs</span>
+        <span>${disp(f.away)} ${flag(f.away)}</span></div>
+      <div class="modal-sub">${f.date} · Group ${f.group}
+        ${wx ? ` · ${wx.stadium} · 🌡️ ${Math.round(wx.tmin_c)}–${Math.round(wx.tmax_c)}°C · ☔ ${wx.precip_prob}% · 💨 ${Math.round(wx.wind_kmh)} km/h${wx.elevation_m > 1000 ? ` · ⛰️ ${wx.elevation_m} m` : ""}` : ""}
+        ${f.neutral ? "" : " · 🏟️ home advantage"}</div>
+      <div class="probbar">
+        <i class="p-h" style="width:${detail.p_home * 100}%"></i>
+        <i class="p-d" style="width:${detail.p_draw * 100}%"></i>
+        <i class="p-a" style="width:${detail.p_away * 100}%"></i></div>
+      <div class="problabels"><span>win ${pct(detail.p_home)}</span>
+        <span>draw ${pct(detail.p_draw)}</span><span>win ${pct(detail.p_away)}</span></div>
+      <div class="xg">Expected goals: ${detail.exp_goals_home.toFixed(2)} – ${detail.exp_goals_away.toFixed(2)}
+        · Elo ${detail.elo_home} vs ${detail.elo_away}</div>
+      <div class="detail-cols">
+        <div><h4>Most likely scorelines</h4>${scoreRowsHtml(detail.top_scorelines)}</div>
+        <div><h4>Markets</h4>${marketRowsHtml(detail.markets, f.home, f.away)}</div>
+      </div>
+      <section class="modal-sec"><h4>Head-to-head history</h4>${meetings}</section>
+      <section class="modal-sec"><h4>Confirmed squads — caps & international goals</h4>
+        <div class="modal-sub">★ gold names = squad's top international scorers. Per-player
+          vs-team splits aren't in any free dataset — figures are full international careers.</div>
+        <div class="squads">${sqHome ? squadHtml(f.home, sqHome) : ""}${sqAway ? squadHtml(f.away, sqAway) : ""}</div>
+      </section>
+      <div class="disclaimer">Model estimates for entertainment — not betting advice.</div>`;
+  } catch (e) {
+    modal.innerHTML = `<button class="close" onclick="closeModal()">✕ close</button>
+      <div class="modal-sub">Failed to load match detail: ${e}</div>`;
+  }
+}
+
+function closeModal() {
+  document.getElementById("modal-backdrop").style.display = "none";
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+init();
+</script>
+</body>
+</html>

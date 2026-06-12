@@ -1,0 +1,19 @@
+{
+  "trained_at": "2026-06-12T10:49:52.012107+00:00",
+  "dataset_rows": 49477,
+  "played_matches": 49407,
+  "last_result_date": "2026-06-11",
+  "training_samples": 30109,
+  "test_window": "2024-01-01 onward (2527 matches)",
+  "model": {
+    "accuracy": 0.6018994855559953,
+    "log_loss": 0.8665486806210574,
+    "brier": 0.5090815793618783
+  },
+  "elo_baseline": {
+    "accuracy": 0.6022952117134943,
+    "log_loss": 0.8850071724782326,
+    "brier": 0.5207329322356986
+  },
+  "majority_class_accuracy": 0.4748713889988128
+}

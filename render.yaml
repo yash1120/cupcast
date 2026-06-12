@@ -1,0 +1,8 @@
+# Render blueprint — deploy with "New +" -> "Blueprint" -> point at this repo.
+services:
+  - type: web
+    name: cupcast
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/metrics
+    autoDeploy: true

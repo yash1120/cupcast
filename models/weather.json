@@ -1,0 +1,565 @@
+{
+ "fetched_on": "2026-06-12",
+ "forecasts": {
+  "2026-06-14|Arlington": {
+   "stadium": "AT&T Stadium, Dallas",
+   "tmax_c": 34.4,
+   "tmin_c": 24.8,
+   "precip_prob": 70,
+   "wind_kmh": 21.6,
+   "elevation_m": 176
+  },
+  "2026-06-17|Arlington": {
+   "stadium": "AT&T Stadium, Dallas",
+   "tmax_c": 36.7,
+   "tmin_c": 23.8,
+   "precip_prob": 3,
+   "wind_kmh": 28.5,
+   "elevation_m": 176
+  },
+  "2026-06-22|Arlington": {
+   "stadium": "AT&T Stadium, Dallas",
+   "tmax_c": 37.2,
+   "tmin_c": 25.2,
+   "precip_prob": 10,
+   "wind_kmh": 20.7,
+   "elevation_m": 176
+  },
+  "2026-06-25|Arlington": {
+   "stadium": "AT&T Stadium, Dallas",
+   "tmax_c": 39.2,
+   "tmin_c": 27.1,
+   "precip_prob": 11,
+   "wind_kmh": 17.0,
+   "elevation_m": 176
+  },
+  "2026-06-27|Arlington": {
+   "stadium": "AT&T Stadium, Dallas",
+   "tmax_c": null,
+   "tmin_c": null,
+   "precip_prob": 13,
+   "wind_kmh": null,
+   "elevation_m": 176
+  },
+  "2026-06-15|Atlanta": {
+   "stadium": "Mercedes-Benz Stadium, Atlanta",
+   "tmax_c": 28.5,
+   "tmin_c": 21.1,
+   "precip_prob": 47,
+   "wind_kmh": 16.1,
+   "elevation_m": 316
+  },
+  "2026-06-18|Atlanta": {
+   "stadium": "Mercedes-Benz Stadium, Atlanta",
+   "tmax_c": 31.9,
+   "tmin_c": 22.6,
+   "precip_prob": 36,
+   "wind_kmh": 17.1,
+   "elevation_m": 316
+  },
+  "2026-06-21|Atlanta": {
+   "stadium": "Mercedes-Benz Stadium, Atlanta",
+   "tmax_c": 36.9,
+   "tmin_c": 26.3,
+   "precip_prob": 20,
+   "wind_kmh": 19.4,
+   "elevation_m": 316
+  },
+  "2026-06-24|Atlanta": {
+   "stadium": "Mercedes-Benz Stadium, Atlanta",
+   "tmax_c": 34.0,
+   "tmin_c": 24.4,
+   "precip_prob": 36,
+   "wind_kmh": 20.5,
+   "elevation_m": 316
+  },
+  "2026-06-27|Atlanta": {
+   "stadium": "Mercedes-Benz Stadium, Atlanta",
+   "tmax_c": null,
+   "tmin_c": null,
+   "precip_prob": 33,
+   "wind_kmh": null,
+   "elevation_m": 316
+  },
+  "2026-06-13|East Rutherford": {
+   "stadium": "MetLife Stadium, New York/NJ",
+   "tmax_c": 32.9,
+   "tmin_c": 19.6,
+   "precip_prob": 1,
+   "wind_kmh": 15.8,
+   "elevation_m": 2
+  },
+  "2026-06-16|East Rutherford": {
+   "stadium": "MetLife Stadium, New York/NJ",
+   "tmax_c": 21.0,
+   "tmin_c": 17.7,
+   "precip_prob": 4,
+   "wind_kmh": 13.9,
+   "elevation_m": 2
+  },
+  "2026-06-22|East Rutherford": {
+   "stadium": "MetLife Stadium, New York/NJ",
+   "tmax_c": 27.7,
+   "tmin_c": 17.8,
+   "precip_prob": 16,
+   "wind_kmh": 21.0,
+   "elevation_m": 2
+  },
+  "2026-06-25|East Rutherford": {
+   "stadium": "MetLife Stadium, New York/NJ",
+   "tmax_c": 26.2,
+   "tmin_c": 14.4,
+   "precip_prob": 25,
+   "wind_kmh": 22.5,
+   "elevation_m": 2
+  },
+  "2026-06-27|East Rutherford": {
+   "stadium": "MetLife Stadium, New York/NJ",
+   "tmax_c": null,
+   "tmin_c": null,
+   "precip_prob": 35,
+   "wind_kmh": null,
+   "elevation_m": 2
+  },
+  "2026-06-13|Foxborough": {
+   "stadium": "Gillette Stadium, Boston",
+   "tmax_c": 29.6,
+   "tmin_c": 19.6,
+   "precip_prob": 5,
+   "wind_kmh": 17.7,
+   "elevation_m": 89
+  },
+  "2026-06-16|Foxborough": {
+   "stadium": "Gillette Stadium, Boston",
+   "tmax_c": 20.4,
+   "tmin_c": 12.8,
+   "precip_prob": 5,
+   "wind_kmh": 11.7,
+   "elevation_m": 89
+  },
+  "2026-06-19|Foxborough": {
+   "stadium": "Gillette Stadium, Boston",
+   "tmax_c": 27.6,
+   "tmin_c": 15.9,
+   "precip_prob": 42,
+   "wind_kmh": 26.1,
+   "elevation_m": 89
+  },
+  "2026-06-23|Foxborough": {
+   "stadium": "Gillette Stadium, Boston",
+   "tmax_c": 28.1,
+   "tmin_c": 12.7,
+   "precip_prob": 29,
+   "wind_kmh": 17.3,
+   "elevation_m": 89
+  },
+  "2026-06-26|Foxborough": {
+   "stadium": "Gillette Stadium, Boston",
+   "tmax_c": 23.7,
+   "tmin_c": 12.1,
+   "precip_prob": 26,
+   "wind_kmh": 12.1,
+   "elevation_m": 89
+  },
+  "2026-06-14|Guadalupe": {
+   "stadium": "Estadio BBVA, Monterrey",
+   "tmax_c": 31.8,
+   "tmin_c": 23.2,
+   "precip_prob": 52,
+   "wind_kmh": 15.3,
+   "elevation_m": 497
+  },
+  "2026-06-20|Guadalupe": {
+   "stadium": "Estadio BBVA, Monterrey",
+   "tmax_c": 32.7,
+   "tmin_c": 22.7,
+   "precip_prob": 32,
+   "wind_kmh": 28.0,
+   "elevation_m": 497
+  },
+  "2026-06-24|Guadalupe": {
+   "stadium": "Estadio BBVA, Monterrey",
+   "tmax_c": 31.1,
+   "tmin_c": 22.0,
+   "precip_prob": 35,
+   "wind_kmh": 27.5,
+   "elevation_m": 497
+  },
+  "2026-06-14|Houston": {
+   "stadium": "NRG Stadium, Houston",
+   "tmax_c": 33.5,
+   "tmin_c": 25.4,
+   "precip_prob": 72,
+   "wind_kmh": 22.1,
+   "elevation_m": 13
+  },
+  "2026-06-17|Houston": {
+   "stadium": "NRG Stadium, Houston",
+   "tmax_c": 34.2,
+   "tmin_c": 24.3,
+   "precip_prob": 33,
+   "wind_kmh": 22.3,
+   "elevation_m": 13
+  },
+  "2026-06-20|Houston": {
+   "stadium": "NRG Stadium, Houston",
+   "tmax_c": 33.7,
+   "tmin_c": 25.9,
+   "precip_prob": 10,
+   "wind_kmh": 21.1,
+   "elevation_m": 13
+  },
+  "2026-06-23|Houston": {
+   "stadium": "NRG Stadium, Houston",
+   "tmax_c": 36.2,
+   "tmin_c": 25.5,
+   "precip_prob": 3,
+   "wind_kmh": 21.3,
+   "elevation_m": 13
+  },
+  "2026-06-26|Houston": {
+   "stadium": "NRG Stadium, Houston",
+   "tmax_c": 37.6,
+   "tmin_c": 25.1,
+   "precip_prob": 13,
+   "wind_kmh": 22.4,
+   "elevation_m": 13
+  },
+  "2026-06-12|Inglewood": {
+   "stadium": "SoFi Stadium, Los Angeles",
+   "tmax_c": 25.5,
+   "tmin_c": 17.3,
+   "precip_prob": 1,
+   "wind_kmh": 18.7,
+   "elevation_m": 40
+  },
+  "2026-06-15|Inglewood": {
+   "stadium": "SoFi Stadium, Los Angeles",
+   "tmax_c": 23.5,
+   "tmin_c": 19.1,
+   "precip_prob": 0,
+   "wind_kmh": 25.1,
+   "elevation_m": 40
+  },
+  "2026-06-18|Inglewood": {
+   "stadium": "SoFi Stadium, Los Angeles",
+   "tmax_c": 22.3,
+   "tmin_c": 18.5,
+   "precip_prob": 1,
+   "wind_kmh": 21.3,
+   "elevation_m": 40
+  },
+  "2026-06-21|Inglewood": {
+   "stadium": "SoFi Stadium, Los Angeles",
+   "tmax_c": 22.8,
+   "tmin_c": 17.9,
+   "precip_prob": 0,
+   "wind_kmh": 16.5,
+   "elevation_m": 40
+  },
+  "2026-06-25|Inglewood": {
+   "stadium": "SoFi Stadium, Los Angeles",
+   "tmax_c": 24.4,
+   "tmin_c": 18.9,
+   "precip_prob": 0,
+   "wind_kmh": 21.5,
+   "elevation_m": 40
+  },
+  "2026-06-16|Kansas City": {
+   "stadium": "Arrowhead Stadium, Kansas City",
+   "tmax_c": 24.1,
+   "tmin_c": 14.2,
+   "precip_prob": 33,
+   "wind_kmh": 32.6,
+   "elevation_m": 259
+  },
+  "2026-06-20|Kansas City": {
+   "stadium": "Arrowhead Stadium, Kansas City",
+   "tmax_c": 32.8,
+   "tmin_c": 23.7,
+   "precip_prob": 29,
+   "wind_kmh": 33.9,
+   "elevation_m": 259
+  },
+  "2026-06-25|Kansas City": {
+   "stadium": "Arrowhead Stadium, Kansas City",
+   "tmax_c": 21.5,
+   "tmin_c": 18.0,
+   "precip_prob": 32,
+   "wind_kmh": 17.7,
+   "elevation_m": 259
+  },
+  "2026-06-27|Kansas City": {
+   "stadium": "Arrowhead Stadium, Kansas City",
+   "tmax_c": null,
+   "tmin_c": null,
+   "precip_prob": 14,
+   "wind_kmh": null,
+   "elevation_m": 259
+  },
+  "2026-06-17|Mexico City": {
+   "stadium": "Estadio Azteca, Mexico City",
+   "tmax_c": 23.4,
+   "tmin_c": 10.8,
+   "precip_prob": 98,
+   "wind_kmh": 6.1,
+   "elevation_m": 2245
+  },
+  "2026-06-24|Mexico City": {
+   "stadium": "Estadio Azteca, Mexico City",
+   "tmax_c": 20.5,
+   "tmin_c": 14.2,
+   "precip_prob": 84,
+   "wind_kmh": 6.1,
+   "elevation_m": 2245
+  },
+  "2026-06-15|Miami Gardens": {
+   "stadium": "Hard Rock Stadium, Miami",
+   "tmax_c": 34.6,
+   "tmin_c": 27.9,
+   "precip_prob": 77,
+   "wind_kmh": 26.0,
+   "elevation_m": 5
+  },
+  "2026-06-21|Miami Gardens": {
+   "stadium": "Hard Rock Stadium, Miami",
+   "tmax_c": 35.0,
+   "tmin_c": 28.3,
+   "precip_prob": 40,
+   "wind_kmh": 22.9,
+   "elevation_m": 5
+  },
+  "2026-06-24|Miami Gardens": {
+   "stadium": "Hard Rock Stadium, Miami",
+   "tmax_c": 34.6,
+   "tmin_c": 28.8,
+   "precip_prob": 42,
+   "wind_kmh": 24.0,
+   "elevation_m": 5
+  },
+  "2026-06-27|Miami Gardens": {
+   "stadium": "Hard Rock Stadium, Miami",
+   "tmax_c": null,
+   "tmin_c": null,
+   "precip_prob": 57,
+   "wind_kmh": null,
+   "elevation_m": 5
+  },
+  "2026-06-14|Philadelphia": {
+   "stadium": "Lincoln Financial Field, Philadelphia",
+   "tmax_c": 31.0,
+   "tmin_c": 21.8,
+   "precip_prob": 70,
+   "wind_kmh": 24.8,
+   "elevation_m": 0
+  },
+  "2026-06-19|Philadelphia": {
+   "stadium": "Lincoln Financial Field, Philadelphia",
+   "tmax_c": 28.5,
+   "tmin_c": 18.8,
+   "precip_prob": 29,
+   "wind_kmh": 25.2,
+   "elevation_m": 0
+  },
+  "2026-06-22|Philadelphia": {
+   "stadium": "Lincoln Financial Field, Philadelphia",
+   "tmax_c": 26.7,
+   "tmin_c": 19.6,
+   "precip_prob": 17,
+   "wind_kmh": 13.9,
+   "elevation_m": 0
+  },
+  "2026-06-25|Philadelphia": {
+   "stadium": "Lincoln Financial Field, Philadelphia",
+   "tmax_c": 23.9,
+   "tmin_c": 16.1,
+   "precip_prob": 24,
+   "wind_kmh": 16.7,
+   "elevation_m": 0
+  },
+  "2026-06-27|Philadelphia": {
+   "stadium": "Lincoln Financial Field, Philadelphia",
+   "tmax_c": null,
+   "tmin_c": null,
+   "precip_prob": 33,
+   "wind_kmh": null,
+   "elevation_m": 0
+  },
+  "2026-06-13|Santa Clara": {
+   "stadium": "Levi's Stadium, San Francisco Bay",
+   "tmax_c": 24.9,
+   "tmin_c": 12.8,
+   "precip_prob": 0,
+   "wind_kmh": 19.6,
+   "elevation_m": 3
+  },
+  "2026-06-16|Santa Clara": {
+   "stadium": "Levi's Stadium, San Francisco Bay",
+   "tmax_c": 34.4,
+   "tmin_c": 19.4,
+   "precip_prob": 0,
+   "wind_kmh": 18.7,
+   "elevation_m": 3
+  },
+  "2026-06-19|Santa Clara": {
+   "stadium": "Levi's Stadium, San Francisco Bay",
+   "tmax_c": 28.0,
+   "tmin_c": 13.4,
+   "precip_prob": 1,
+   "wind_kmh": 21.0,
+   "elevation_m": 3
+  },
+  "2026-06-22|Santa Clara": {
+   "stadium": "Levi's Stadium, San Francisco Bay",
+   "tmax_c": 28.4,
+   "tmin_c": 14.4,
+   "precip_prob": 0,
+   "wind_kmh": 23.2,
+   "elevation_m": 3
+  },
+  "2026-06-25|Santa Clara": {
+   "stadium": "Levi's Stadium, San Francisco Bay",
+   "tmax_c": 25.4,
+   "tmin_c": 13.5,
+   "precip_prob": 0,
+   "wind_kmh": 20.7,
+   "elevation_m": 3
+  },
+  "2026-06-15|Seattle": {
+   "stadium": "Lumen Field, Seattle",
+   "tmax_c": 32.2,
+   "tmin_c": 16.1,
+   "precip_prob": 0,
+   "wind_kmh": 16.3,
+   "elevation_m": 11
+  },
+  "2026-06-19|Seattle": {
+   "stadium": "Lumen Field, Seattle",
+   "tmax_c": 24.9,
+   "tmin_c": 9.5,
+   "precip_prob": 7,
+   "wind_kmh": 15.4,
+   "elevation_m": 11
+  },
+  "2026-06-24|Seattle": {
+   "stadium": "Lumen Field, Seattle",
+   "tmax_c": 28.0,
+   "tmin_c": 12.7,
+   "precip_prob": 10,
+   "wind_kmh": 11.6,
+   "elevation_m": 11
+  },
+  "2026-06-26|Seattle": {
+   "stadium": "Lumen Field, Seattle",
+   "tmax_c": 24.7,
+   "tmin_c": 10.2,
+   "precip_prob": 6,
+   "wind_kmh": 15.5,
+   "elevation_m": 11
+  },
+  "2026-06-12|Toronto": {
+   "stadium": "BMO Field, Toronto",
+   "tmax_c": 27.0,
+   "tmin_c": 16.7,
+   "precip_prob": 18,
+   "wind_kmh": 24.2,
+   "elevation_m": 83
+  },
+  "2026-06-17|Toronto": {
+   "stadium": "BMO Field, Toronto",
+   "tmax_c": 24.0,
+   "tmin_c": 13.6,
+   "precip_prob": 31,
+   "wind_kmh": 24.3,
+   "elevation_m": 83
+  },
+  "2026-06-20|Toronto": {
+   "stadium": "BMO Field, Toronto",
+   "tmax_c": 20.2,
+   "tmin_c": 12.5,
+   "precip_prob": 11,
+   "wind_kmh": 25.3,
+   "elevation_m": 83
+  },
+  "2026-06-23|Toronto": {
+   "stadium": "BMO Field, Toronto",
+   "tmax_c": 24.9,
+   "tmin_c": 14.8,
+   "precip_prob": 6,
+   "wind_kmh": 11.8,
+   "elevation_m": 83
+  },
+  "2026-06-26|Toronto": {
+   "stadium": "BMO Field, Toronto",
+   "tmax_c": 19.9,
+   "tmin_c": 12.5,
+   "precip_prob": 26,
+   "wind_kmh": 10.7,
+   "elevation_m": 83
+  },
+  "2026-06-13|Vancouver": {
+   "stadium": "BC Place, Vancouver",
+   "tmax_c": 25.2,
+   "tmin_c": 13.1,
+   "precip_prob": 0,
+   "wind_kmh": 18.7,
+   "elevation_m": 18
+  },
+  "2026-06-18|Vancouver": {
+   "stadium": "BC Place, Vancouver",
+   "tmax_c": 18.1,
+   "tmin_c": 13.2,
+   "precip_prob": 4,
+   "wind_kmh": 17.2,
+   "elevation_m": 18
+  },
+  "2026-06-21|Vancouver": {
+   "stadium": "BC Place, Vancouver",
+   "tmax_c": 27.1,
+   "tmin_c": 16.3,
+   "precip_prob": 9,
+   "wind_kmh": 10.2,
+   "elevation_m": 18
+  },
+  "2026-06-24|Vancouver": {
+   "stadium": "BC Place, Vancouver",
+   "tmax_c": 21.3,
+   "tmin_c": 15.2,
+   "precip_prob": 16,
+   "wind_kmh": 18.8,
+   "elevation_m": 18
+  },
+  "2026-06-26|Vancouver": {
+   "stadium": "BC Place, Vancouver",
+   "tmax_c": 19.1,
+   "tmin_c": 13.2,
+   "precip_prob": 16,
+   "wind_kmh": 17.9,
+   "elevation_m": 18
+  },
+  "2026-06-18|Zapopan": {
+   "stadium": "Estadio Akron, Guadalajara",
+   "tmax_c": 24.9,
+   "tmin_c": 15.1,
+   "precip_prob": 41,
+   "wind_kmh": 12.5,
+   "elevation_m": 1665
+  },
+  "2026-06-23|Zapopan": {
+   "stadium": "Estadio Akron, Guadalajara",
+   "tmax_c": 23.1,
+   "tmin_c": 15.6,
+   "precip_prob": 92,
+   "wind_kmh": 9.3,
+   "elevation_m": 1665
+  },
+  "2026-06-26|Zapopan": {
+   "stadium": "Estadio Akron, Guadalajara",
+   "tmax_c": 23.2,
+   "tmin_c": 15.4,
+   "precip_prob": 71,
+   "wind_kmh": 15.9,
+   "elevation_m": 1665
+  }
+ }
+}
