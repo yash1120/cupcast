@@ -1,0 +1,34 @@
+# Daily odds refresh — keeps the deployed app current during the tournament.
+#
+# The Docker image retrains itself at build time (download data -> train ->
+# simulate), so refreshing the odds = triggering a factory rebuild of the
+# Hugging Face Space. Yesterday's results get locked into the simulation
+# and the title odds re-converge around reality.
+#
+# One-time setup in this GitHub repo (Settings -> Secrets and variables -> Actions):
+#   secret   HF_TOKEN  — Hugging Face access token with "write" scope
+#   variable HF_SPACE  — your Space id, e.g. "yash1120/cupcast"
+name: Daily odds refresh
+
+on:
+  schedule:
+    - cron: "0 10 * * *" # 10:00 UTC daily — after the previous matchday's results land upstream (~8pm Sydney)
+  workflow_dispatch: # manual "Run workflow" button for instant refreshes
+
+jobs:
+  rebuild-space:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Hugging Face factory rebuild
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_SPACE: ${{ vars.HF_SPACE }}
+        run: |
+          if [ -z "$HF_TOKEN" ] || [ -z "$HF_SPACE" ]; then
+            echo "::error::Configure the HF_TOKEN secret and HF_SPACE variable (e.g. yash1120/cupcast) in repo settings."
+            exit 1
+          fi
+          curl -sf -X POST \
+            -H "Authorization: Bearer $HF_TOKEN" \
+            "https://huggingface.co/api/spaces/$HF_SPACE/restart?factory=true"
+          echo "Factory rebuild triggered: the Space re-downloads results, retrains, and re-simulates."
