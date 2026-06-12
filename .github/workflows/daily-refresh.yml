@@ -6,8 +6,8 @@
 # and the title odds re-converge around reality.
 #
 # One-time setup in this GitHub repo (Settings -> Secrets and variables -> Actions):
-#   secret   HF_TOKEN  — Hugging Face access token with "write" scope
-#   variable HF_SPACE  — your Space id, e.g. "yash1120/cupcast"
+#   secret  HF_TOKEN  — Hugging Face access token with "write" scope
+# (The Space id is hardcoded below in HF_SPACE — it isn't secret.)
 name: Daily odds refresh
 
 on:
@@ -22,10 +22,10 @@ jobs:
       - name: Trigger Hugging Face factory rebuild
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-          HF_SPACE: ${{ vars.HF_SPACE }}
+          HF_SPACE: yash1120/cupcast
         run: |
-          if [ -z "$HF_TOKEN" ] || [ -z "$HF_SPACE" ]; then
-            echo "::error::Configure the HF_TOKEN secret and HF_SPACE variable (e.g. yash1120/cupcast) in repo settings."
+          if [ -z "$HF_TOKEN" ]; then
+            echo "::error::Add an HF_TOKEN secret (write-scoped Hugging Face token) under repo Settings -> Secrets and variables -> Actions."
             exit 1
           fi
           curl -sf -X POST \
