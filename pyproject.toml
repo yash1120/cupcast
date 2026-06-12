@@ -1,0 +1,5 @@
+[tool.pytest.ini_options]
+# Put the project root on sys.path so `import cupcast` works under a bare
+# `pytest` invocation (CI), not just `python -m pytest` (which adds cwd itself).
+pythonpath = ["."]
+testpaths = ["tests"]
